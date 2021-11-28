@@ -10,27 +10,14 @@ import PostForm from "./components/PostForm";
 import MySelect from "./components/UI/select/MySelect";
 import PostFilter from "./components/PostFilter";
 import MyModal from "./components/UI/modal/MyModal";
+import {usePosts} from "./hooks/usePosts";
 
 function App() {
-    const [posts, setPosts] = useState([
-        {id: 1, title: 'bc', body: '1112'},
-        {id: 2, title: 'ab', body: '2223'},
-        {id: 3, title: 'dc', body: '1'}
-    ])
+    const [posts, setPosts] = useState([])
     const [filter, setFilter] = useState({sort: '', query: ''});
     const [modal, setModal] = useState(false);
+    const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
 
-    const sortedPosts = useMemo(() => {
-        console.log('ОТРАБОТАЛА ФУНКЦИЯ SORTED POSTS')
-        if (filter.sort) {
-            return [...posts].sort((a,b) => a[filter.sort].localeCompare(b[filter.sort]))
-        }
-        return posts;
-    }, [filter.sort, posts])
-
-    const sortedAndSearchedPosts = useMemo(() => {
-        return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.query))
-    }, [filter.query, sortedPosts])
 
     // Call-back функция для передачи информации от PostForm родителю App
     const createPost = (newPost) => {
