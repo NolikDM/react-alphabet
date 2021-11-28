@@ -35,6 +35,7 @@ function App() {
     // Call-back функция для передачи информации от PostForm родителю App
     const createPost = (newPost) => {
         setPosts([...posts, newPost])
+        setModal(false)
     }
     // получаем post из дочернего элемента
     const removePost = (post) => {
@@ -44,8 +45,8 @@ function App() {
 
   return (
       <div className="App">
-          <MyButton onClick={}>
-              Создать пост
+          <MyButton style={{marginTop: 30}} onClick={() => setModal(true)}>
+              Создать пользователя
           </MyButton>
           <MyModal visible={modal} setVisible={setModal}>
               <PostForm create={createPost}/>
